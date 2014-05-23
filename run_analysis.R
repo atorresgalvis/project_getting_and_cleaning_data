@@ -48,3 +48,19 @@ names(complete_data) <- c("body_acc_x", "body_acc_y", "body_acc_z", "body_gyro_x
 ##write the complete data in two formats/files: .RData file (ready to be called in R or RStudio) and a readable .txt (text) file
 save(complete_data, file = "complete_data.RData")
 dput(complete_data, file = "complete_data.txt") 
+## obtain the means of all variables in the data
+total_mean <- NULL
+for (j in 1:9) {
+        mean_variable<-mean(complete_data[[j]][[3]]) 
+        for(i in 4:130) {
+                new_mean<-mean(complete_data[[j]][[i]])
+                mean_variable <- c(mean_variable, new_mean)        
+        } 
+        newest_mean<-mean(mean_variable)
+        total_mean<-c(total_mean, newest_mean)
+}
+names(total_mean) <- c("body_acc_x", "body_acc_y", "body_acc_z", "body_gyro_x", "body_gyro_y", "body_gyro_z", "total_acc_x", "total_acc_y", "total_acc_z")
+total_mean<-as.matrix(total_mean) ; colnames(total_mean)<- c("mean")
+write.table(total_mean, "total_means.txt")
+total_mean
+##
